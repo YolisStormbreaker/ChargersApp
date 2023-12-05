@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Список зарядок</string>
+	<string name="cities_list_screen_header">Выберите город</string>
+	<string name="chargers_list_screen_header">Список зарядок</string>
+</resources>

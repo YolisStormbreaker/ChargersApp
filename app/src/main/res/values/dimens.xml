@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="medium_padding">15dp</dimen>
+	<dimen name="min_height_normal">35dp</dimen>
+	<dimen name="margin_medium">10dp</dimen>
+	<dimen name="charger_state_width">4dp</dimen>
+</resources>
