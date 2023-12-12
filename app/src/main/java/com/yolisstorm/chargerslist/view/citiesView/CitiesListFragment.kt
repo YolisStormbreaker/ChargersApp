@@ -1,19 +1,26 @@
 package com.yolisstorm.chargerslist.view.citiesView
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import com.yolisstorm.chargerslist.MainActivity
 import com.yolisstorm.chargerslist.R
 import com.yolisstorm.chargerslist.databinding.CitiesListFragmentBinding
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,8 +42,28 @@ class CitiesListFragment : Fragment() {
         )
 
         lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                launch {
+                    citiesListViewModel.isTimeToMoveAtNextScreen.collect { isTime ->
+                        if (isTime) {
+                            Log.d("IT'S_TIME!", "IT'S_TIME!")
+                        }
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 citiesListViewModel.updateCitiesList()
+
+                launch {
+                    citiesListViewModel.countDownTimerFlow.collect {
+                        binding.countDown.text = it.toString()
+                    }
+                }
+
+
             }
         }
         return binding.root
@@ -63,5 +90,6 @@ class CitiesListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+        citiesListViewModel.toggleCountDownTimerStart()
     }
 }

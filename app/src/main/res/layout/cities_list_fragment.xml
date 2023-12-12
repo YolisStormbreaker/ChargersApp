@@ -7,9 +7,19 @@
 	android:layout_height="match_parent"
 	tools:context=".view.citiesView.CitiesListFragment">
 
+	<TextView
+		android:id="@+id/countDown"
+		style="@style/TextAppearance.AppCompat.Display1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:text="0"/>
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/cities_list_recycler_view"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="match_parent"
+		tools:itemCount="3"
+		tools:listitem="@layout/city_item_view_holder"
+		android:layout_marginTop="@dimen/min_height_normal"/>
 
 </FrameLayout>
